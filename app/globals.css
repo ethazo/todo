@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* 全局变量与自定义变体 */
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* 定义中文环境常用的柔和颜色 */
+  --color-brand: #3b82f6;
+  --color-bg-light: #ffffff;
+  --color-bg-dark: #0f172a;
+
+  --spacing: 0.25rem;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 1.75;
+}
+
+/* 基础样式优化 */
+@layer base {
+  :root {
+    color-scheme: light;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    
+    /* 基础文字颜色与背景 */
+    @apply text-slate-800 bg-white leading-relaxed;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+    @apply text-slate-200 bg-slate-950;
+  }
+
+  /* 滚动条美化 (符合现代移动端/macOS 风格) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full border-2 border-transparent bg-clip-padding;
+    &:hover { @apply bg-slate-400; }
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700;
+    &:hover { @apply bg-slate-600; }
+  }
+
+  /* 排版细节修正 */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight text-slate-900;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-white;
+  }
+
+  p {
+    @apply mb-4 last:mb-0;
+  }
+
+  /* 选中文字的颜色 */
+  ::selection {
+    @apply bg-blue-100 text-blue-900;
+  }
+  .dark ::selection {
+    @apply bg-blue-500/30 text-blue-200;
+  }
+}
+
+/* 视图过渡保持原样  */
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
